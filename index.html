@@ -158,6 +158,12 @@
       const growth = 1 + noClickCount * 0.2;
 
       yesBtn.style.transform = `scale(${growth})`;
+
+      if (growth >= 2.5) {
+        noBtn.style.display = 'none';
+        yesBtn.style.marginTop = '3em';
+        yesBtn.setAttribute('onclick', 'goToNoPage()');
+      }
       if (growth >= 2.5) {
         noBtn.style.display = 'none';
         yesBtn.style.marginTop = '3em';
@@ -204,3 +210,4 @@
   </script>
 </body>
 </html>
+
