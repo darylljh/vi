@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>vivian date planner! 💐 (Debug)</title>
-  <style>
+  <title>vivian date planner! 💐</title> <style>
     body {
       font-family: 'Segoe UI', sans-serif;
       background-color: #fff9f0;
@@ -67,18 +66,20 @@
   <div class="container">
     <div class="step active" id="step1">
       <h1>Will you go out with me? 💐</h1>
-      <button id="yesBtn" style="transition: all 0.3s;" onclick="console.log('Yes button clicked'); nextStep()">Yes</button>
-      <button id="noBtn" onclick="console.log('No button clicked'); handleNoClick()">No</button>
+      <button id="yesBtn" style="transition: all 0.3s;" onclick="nextStep()">Yes</button>
+      <button id="noBtn" onclick="handleNoClick()">No</button>
     </div>
 
     <div class="step" id="noPage">
       <h2>Too bad, you already said yes 😌</h2>
-      <img src="chatscreenshot.png" alt="Chat Screenshot" /> <button onclick="console.log('Fine, continue button clicked'); nextStep()">Fine, continue 🙄</button>
+      <img src="chatscreenshot.png" alt="Chat Screenshot" />
+      <button onclick="nextStep()">Fine, continue 🙄</button>
     </div>
 
     <div class="step" id="step2">
       <h2>What flowers make you smile the most?</h2>
-      <img src="this-is-for-you-cat-flower.gif" alt="Cat with flowers" /> <select id="flowers">
+      <img src="this-is-for-you-cat-flower.gif" alt="Cat with flowers" />
+      <select id="flowers">
         <option>Roses 🌹</option>
         <option>Assortment (I love any and all types of flowers)</option>
         <option>ew I hate flowers 😤</option>
@@ -88,12 +89,13 @@
         <option>Others (type below)</option>
       </select>
       <input type="text" id="other_flowers" placeholder="Other flowers (optional)" />
-      <button onclick="console.log('Next (Step 2) clicked'); nextStep()">Next</button>
+      <button onclick="nextStep()">Next</button>
     </div>
 
     <div class="step" id="step3">
       <h2>What food are you craving?</h2>
-      <img src="catwithfood.gif" alt="Cat eating food" /> <select id="food">
+      <img src="catwithfood.gif" alt="Cat eating food" />
+      <select id="food">
         <option>Japanese 🍣</option>
         <option>Western 🍔</option>
         <option>Korean 🍜</option>
@@ -102,13 +104,14 @@
         <option>Café food 🧁</option>
         <option>Others (type below)</option>
       </select>
-      <input type="text" id="other_food" placeholder="Other cuisine (optional)" />
-      <button onclick="console.log('Next (Step 3) clicked'); nextStep()">Next</button>
+      <input type="text" id="other_food" placeholder="Other cuisine (or any specific food!)" />
+      <button onclick="nextStep()">Next</button>
     </div>
 
     <div class="step" id="step4">
-      <h2>Which date works best?</h2>
-      <img src="calendar.png" alt="Are you free?" /> <select id="date">
+      <h2>Which date works best for you?</h2>
+      <img src="calendar.png" alt="Are you free?" />
+      <select id="date">
         <option>May 12</option>
         <option>May 13 (we have HASS enrolment)</option>
         <option>May 14</option>
@@ -116,13 +119,14 @@
         <option>May 16</option>
         <option>Other (type below)</option>
       </select>
-      <input type="text" id="other_date" placeholder="Other date (optional)" />
-      <button onclick="console.log('Next (Step 4) clicked'); nextStep()">Next</button>
+      <input type="text" id="other_date" placeholder="Other date (except 19-29th May I will be in japan)" />
+      <button onclick="nextStep()">Next</button>
     </div>
 
     <div class="step" id="step5">
-      <h2>What time do you prefer?</h2>
-      <img src="comic-sans-what-time.gif" alt="What time?" /> <select id="time">
+      <h2>What is your preferred timing?</h2>
+      <img src="comic-sans-what-time.gif" alt="What time?" />
+      <select id="time">
         <option>11:00 AM</option>
         <option>12:00 PM</option>
         <option>1:00 PM</option>
@@ -130,106 +134,87 @@
         <option>7:00 PM</option>
         <option>Other (type below)</option>
       </select>
-      <input type="text" id="other_time" placeholder="Other time (optional)" />
-      <button onclick="console.log('Next (Step 5) clicked'); nextStep()">Next</button>
+      <input type="text" id="other_time" placeholder="Other timings (even if it's 3am cause you're craving for macdonalds)" />
+      <button onclick="nextStep()">Next</button>
     </div>
 
     <div class="step" id="step6">
       <h2>Do you have any dietary restrictions I should know about?</h2>
       <input type="text" id="dietary_restrictions" placeholder="E.g. no dairy products, vegetarian, no seafood..." />
-      <button onclick="console.log('Next (Step 6) clicked'); nextStep()">Next</button>
+      <button onclick="nextStep()">Next</button>
     </div>
 
     <div class="step" id="step7">
       <h2>What’s your postal code?</h2>
-      <input type="text" id="postal" placeholder="e.g. 123456" />
-      <button onclick="console.log('Next (Step 7) clicked'); nextStep()">Next</button>
+      <input type="text" id="postal" placeholder="you can put NO if youre not comfortable :-)" />
+      <button onclick="nextStep()">Next</button>
     </div>
 
     <div class="step" id="step8">
       <h2>Anything else I should take note of?</h2>
       <input type="text" id="notes" placeholder="Let me know! (eg. daryl is damn cool for doing this early in the morning)" />
-      <button onclick="console.log('Next (Step 8) clicked'); nextStep()">Next</button>
+      <button onclick="nextStep()">Next</button>
     </div>
 
     <div class="step" id="step9">
       <h2>Here’s what you picked! 📝</h2>
       <div id="summary"></div>
       <p id="pickupLine"></p>
-      <button onclick="console.log('Confirm & Submit clicked'); finishForm()">Confirm & Submit</button>
+      <button onclick="finishForm()">Confirm & Submit</button>
     </div>
 
     <div class="step" id="done" style="text-align: center;">
-        <img src="its-a-date.gif" alt="It's a date!" style="max-width: 100%; height: auto; border-radius: 1em; margin-top: 2em;" />
-        <p style="margin-top: 1em; font-size: 1.2em;">See you soon! 😉</p>
-    </div>
-    </div>
+        <img src="its-a-date.png" alt="It's a date!" style="max-width: 100%; height: auto; border-radius: 1em; margin-top: 2em;" />
+        </div>
+
+  </div>
 
   <script>
-    console.log("Script loaded. Initializing variables.");
+    // Removed console.log messages for cleaner final code
     let noClickCount = 0;
-    let stepIndex = 1; // Start at step 1
+    let stepIndex = 1;
 
     function handleNoClick() {
-      console.log("handleNoClick function started. Count:", noClickCount);
       noClickCount++;
       const yesBtn = document.getElementById('yesBtn');
       const noBtn = document.getElementById('noBtn');
-
-      if (!yesBtn || !noBtn) {
-        console.error("Yes or No button not found in handleNoClick!");
-        return;
-      }
-      console.log("Found Yes and No buttons.");
+      if (!yesBtn || !noBtn) return;
 
       const growth = 1 + noClickCount * 0.2;
-      console.log("Calculated growth:", growth);
       yesBtn.style.transform = `scale(${growth})`;
 
       if (growth >= 2.5) {
-        console.log("Growth limit reached. Hiding No button, changing Yes button action.");
         noBtn.style.display = 'none';
         yesBtn.style.marginTop = '3em';
-        yesBtn.onclick = function() {
-             console.log("Scaled Yes button clicked -> calling goToNoPage()");
-             goToNoPage();
-        };
+        yesBtn.onclick = goToNoPage;
       }
-      console.log("handleNoClick function finished.");
     }
 
     function nextStep() {
-      console.log(`nextStep function started. Current stepIndex: ${stepIndex}`);
-
       const currentStep = document.querySelector('.step.active');
       if (currentStep) {
-        console.log(`Deactivating current step: ${currentStep.id}`);
         currentStep.classList.remove('active');
       } else {
-        console.warn("No active step found to deactivate.");
         stepIndex = Math.max(stepIndex, 1);
       }
 
       if (currentStep && currentStep.id === 'noPage') {
-          console.log("Transitioning from noPage. Setting stepIndex to 2.");
           stepIndex = 2;
       } else if (currentStep && currentStep.id !== 'noPage') {
            stepIndex++;
-           console.log(`Incremented stepIndex to: ${stepIndex}`);
       } else if (!currentStep) {
-           console.error("Could not determine the next step because no active step was found initially.");
+           // Fallback if something went wrong
+           stepIndex = Math.max(stepIndex + 1, 2);
       }
 
       if (stepIndex === 9) {
-        console.log("Processing step 9: Summary");
         const summaryDiv = document.getElementById('summary');
         const pickupLine = document.getElementById('pickupLine');
 
         if (!summaryDiv || !pickupLine) {
-          console.error("Summary elements (summaryDiv or pickupLine) not found!");
+          console.error("Summary elements not found!"); // Keep essential error logs
           return;
         }
-        console.log("Found summary elements.");
 
         const flowersSelect = document.getElementById('flowers');
         const otherFlowersInput = document.getElementById('other_flowers');
@@ -255,8 +240,6 @@
         const postal = postalInput ? postalInput.value : '';
         const notes = notesInput ? notesInput.value : '';
 
-        console.log("Gathered summary data:", { flowers, otherFlowers, food, otherFood, date, otherDate, time, otherTime, restrictions, postal, notes });
-
         summaryDiv.innerHTML = `
           <ul style="text-align:left">
             <li><strong>Flowers:</strong> ${flowers}${otherFlowers ? ' (' + otherFlowers + ')' : ''}</li>
@@ -267,59 +250,48 @@
             <li><strong>Postal Code:</strong> ${postal || 'Not provided'}</li>
             <li><strong>Other notes:</strong> ${notes || 'None'}</li>
           </ul>`;
-        console.log("Summary HTML generated.");
 
-        pickupLine.innerText = `I will pick you up at ${otherTime || time}.`;
-        console.log(`Pickup line set to: "${pickupLine.innerText}"`);
+        // --- CHANGED PICKUP LINE TEXT ---
+        pickupLine.innerText = `I will pick you up at ${otherTime || time}~`;
+        // --- END OF CHANGE ---
       }
 
-      console.log(`Attempting to activate step: step${stepIndex}`);
       const nextStepElement = document.getElementById(`step${stepIndex}`);
       if (nextStepElement) {
         nextStepElement.classList.add('active');
-        console.log(`Successfully activated step: ${nextStepElement.id}`);
       } else {
          console.error(`Failed to find element for next step: step${stepIndex}`);
          if (stepIndex > 9 && document.getElementById('done')) {
-             console.warn("Tried to navigate past step 9, maybe should show 'done' page or error.");
+            // If trying to step past summary, likely an issue, but ensure 'done' can show
          }
       }
-      console.log("nextStep function finished.");
     }
 
     function goToNoPage() {
-      console.log("goToNoPage function started.");
       const currentStep = document.querySelector('.step.active');
       if (currentStep) {
-        console.log(`Deactivating current step: ${currentStep.id}`);
         currentStep.classList.remove('active');
-      } else {
-         console.warn("No active step found to deactivate in goToNoPage.");
       }
-
       const noPageElement = document.getElementById('noPage');
       if (noPageElement) {
-        console.log("Activating noPage element.");
         noPageElement.classList.add('active');
       } else {
          console.error("Element with ID 'noPage' not found!");
       }
-      console.log("goToNoPage function finished.");
     }
 
     function finishForm() {
-      console.log("finishForm function started.");
        const flowersSelect = document.getElementById('flowers');
-      const otherFlowersInput = document.getElementById('other_flowers');
-      const foodSelect = document.getElementById('food');
-      const otherFoodInput = document.getElementById('other_food');
-      const dateSelect = document.getElementById('date');
-      const otherDateInput = document.getElementById('other_date');
-      const timeSelect = document.getElementById('time');
-      const otherTimeInput = document.getElementById('other_time');
-      const restrictionsInput = document.getElementById('dietary_restrictions');
-      const postalInput = document.getElementById('postal');
-      const notesInput = document.getElementById('notes');
+       const otherFlowersInput = document.getElementById('other_flowers');
+       const foodSelect = document.getElementById('food');
+       const otherFoodInput = document.getElementById('other_food');
+       const dateSelect = document.getElementById('date');
+       const otherDateInput = document.getElementById('other_date');
+       const timeSelect = document.getElementById('time');
+       const otherTimeInput = document.getElementById('other_time');
+       const restrictionsInput = document.getElementById('dietary_restrictions');
+       const postalInput = document.getElementById('postal');
+       const notesInput = document.getElementById('notes');
 
        const data = {
         flowers: flowersSelect ? flowersSelect.value : '',
@@ -335,10 +307,10 @@
         extra_notes: notesInput ? notesInput.value : ''
       };
 
-      console.log("Data prepared for submission:", data);
+      // Optional: Log final data before sending
+      // console.log("Submitting final data:", data);
 
       const apiUrl = 'https://sheetdb.io/api/v1/s3n9wpw5o7lff';
-      console.log(`Sending POST request to: ${apiUrl}`);
       fetch(apiUrl, {
         method: 'POST',
         headers: {
@@ -348,8 +320,8 @@
         body: JSON.stringify({ data: [data] })
       })
       .then(response => {
-          console.log(`Workspace response status: ${response.status} ${response.statusText}`);
           if (!response.ok) {
+              // Log error response for debugging if needed
               return response.text().then(text => {
                   console.error("SheetDB Error Response Body:", text);
                   throw new Error(`Network response was not ok: ${response.status} ${response.statusText}.`);
@@ -358,15 +330,13 @@
           return response.json();
       })
       .then(json => {
-          console.log("SheetDB Success Response:", json);
+          // console.log("SheetDB Success Response:", json); // Optional success log
           const currentStep = document.querySelector('.step.active');
           if (currentStep) {
-            console.log(`Deactivating current step: ${currentStep.id}`);
             currentStep.classList.remove('active');
           }
           const doneElement = document.getElementById('done');
           if (doneElement) {
-            console.log("Activating 'done' step.");
             doneElement.classList.add('active');
           } else {
             console.error("Element with ID 'done' not found!");
@@ -376,7 +346,6 @@
           console.error('Error during fetch operation:', err);
           alert(`There was an error submitting your preferences: ${err.message}\nPlease check the console (F12) for more details.`);
       });
-      console.log("finishForm function finished.");
     }
   </script>
 </body>
