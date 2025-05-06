@@ -57,8 +57,8 @@
   <div class="container">
     <div class="step active" id="step1">
       <h1>Will you go out with me? 💐</h1>
-      <button onclick="nextStep('yes')">Yes</button>
-      <button onclick="goToNoPage()">No</button>
+      <button id="yesBtn" style="transition: all 0.3s;" onclick="nextStep('yes')">Yes</button>
+      <button id="noBtn" onclick="handleNoClick()">No</button>
     </div>
 
     <div class="step" id="noPage">
@@ -73,6 +73,8 @@
       <img src="this-is-for-you-cat-flower.gif" alt="Cat with flowers" />
       <select id="flowers">
         <option>Roses 🌹</option>
+        <option>Assortment (I love any and all types of flowers)</option>
+        <option>ew I hate flowers 😤</option>
         <option>Tulips 🌷</option>
         <option>Sunflowers 🌻</option>
         <option>Lilies 🤍</option>
@@ -143,13 +145,24 @@
     </div>
 
     <div class="step" id="done">
-      <h2>Thank you 💕</h2>
       <img src="its-a-date.gif" alt="It's a date!" style="width: 100%; max-width: 500px; height: auto;" />
-      <p>Can’t wait to see you! 😌</p>
     </div>
   </div>
 
   <script>
+    let noClickCount = 0;
+    function handleNoClick() {
+      noClickCount++;
+      const yesBtn = document.getElementById('yesBtn');
+      const noBtn = document.getElementById('noBtn');
+      const growth = 1 + noClickCount * 0.2;
+
+      yesBtn.style.transform = `scale(${growth})`;
+      if (growth >= 2.5) {
+        noBtn.style.display = 'none';
+        yesBtn.style.marginTop = '3em';
+      }
+    }
     let stepIndex = 1;
     function nextStep() {
       document.querySelector('.step.active').classList.remove('active');
