@@ -35,6 +35,7 @@
       font-size: 1em;
       border-radius: 1em;
       cursor: pointer;
+      transition: background-color 0.3s, transform 0.3s; /* Added transform transition */
     }
     button:hover {
       background-color: #ff99ac;
@@ -45,11 +46,19 @@
       margin-top: 1em;
       border: 1px solid #ccc;
       border-radius: 0.5em;
+      box-sizing: border-box; /* Added for consistent sizing */
     }
     img {
       max-width: 100%;
       margin: 1em 0;
       border-radius: 0.5em;
+    }
+    ul {
+      list-style: none; /* Cleaner look for summary */
+      padding: 0;
+    }
+    li {
+      margin-bottom: 0.5em; /* Spacing in summary */
     }
   </style>
 </head>
@@ -69,7 +78,7 @@
 
     <div class="step" id="step2">
       <h2>What flowers make you smile the most?</h2>
-      <img src="this-is-for-you-cat-flower.gif" alt="Cat with flowers" />
+       <img src="this-is-for-you-cat-flower.gif" alt="Cat with flowers" />
       <select id="flowers">
         <option>Roses 🌹</option>
         <option>Assortment (I love any and all types of flowers)</option>
@@ -79,7 +88,7 @@
         <option>Lilies 🤍</option>
         <option>Others (type below)</option>
       </select>
-      <input type="text" placeholder="Other flowers (optional)" />
+      <input type="text" id="other_flowers" placeholder="Other flowers (optional)" />
       <button onclick="nextStep()">Next</button>
     </div>
 
@@ -95,7 +104,7 @@
         <option>Café food 🧁</option>
         <option>Others (type below)</option>
       </select>
-      <input type="text" placeholder="Other cuisine (optional)" />
+      <input type="text" id="other_food" placeholder="Other cuisine (optional)" />
       <button onclick="nextStep()">Next</button>
     </div>
 
@@ -110,13 +119,13 @@
         <option>May 16</option>
         <option>Other (type below)</option>
       </select>
-      <input type="text" placeholder="Other date (optional)" />
+      <input type="text" id="other_date" placeholder="Other date (optional)" />
       <button onclick="nextStep()">Next</button>
     </div>
 
     <div class="step" id="step5">
       <h2>What time do you prefer?</h2>
-      <img src="comic-sans-what-time.gif" alt="What time?" />
+       <img src="comic-sans-what-time.gif" alt="What time?" />
       <select id="time">
         <option>11:00 AM</option>
         <option>12:00 PM</option>
@@ -125,15 +134,13 @@
         <option>7:00 PM</option>
         <option>Other (type below)</option>
       </select>
-      <input type="text" placeholder="Other time (optional)" />
+      <input type="text" id="other_time" placeholder="Other time (optional)" />
       <button onclick="nextStep()">Next</button>
     </div>
 
-    
-
     <div class="step" id="step6">
       <h2>Do you have any dietary restrictions I should know about?</h2>
-      <input type="text" placeholder="E.g. no dairy products, vegetarian, no seafood..." />
+      <input type="text" id="dietary_restrictions" placeholder="E.g. no dairy products, vegetarian, no seafood..." />
       <button onclick="nextStep()">Next</button>
     </div>
 
@@ -148,6 +155,7 @@
       <input type="text" id="notes" placeholder="Let me know! (eg. daryl is damn cool for doing this early in the morning)" />
       <button onclick="nextStep()">Next</button>
     </div>
+
     <div class="step" id="step9">
       <h2>Here’s what you picked! 📝</h2>
       <div id="summary"></div>
@@ -155,47 +163,91 @@
       <button onclick="finishForm()">Confirm & Submit</button>
     </div>
 
-    <div class="step" id="done">$1</div>
+    <div class="step" id="done">
+        <h2>Thank You!</h2>
+        <p>Your preferences have been submitted. 😊</p>
+    </div>
   </div>
 
   <script>
     let noClickCount = 0;
+    let stepIndex = 1; // Start at step 1
+
     function handleNoClick() {
       noClickCount++;
       const yesBtn = document.getElementById('yesBtn');
       const noBtn = document.getElementById('noBtn');
-      const growth = 1 + noClickCount * 0.2;
+      // Ensure buttons exist before modifying
+      if (!yesBtn || !noBtn) return;
 
+      const growth = 1 + noClickCount * 0.2;
       yesBtn.style.transform = `scale(${growth})`;
 
       if (growth >= 2.5) {
         noBtn.style.display = 'none';
-        yesBtn.style.marginTop = '3em';
+        yesBtn.style.marginTop = '3em'; // Adjust margin if needed
+        // Change yes button to go to the 'noPage'
         yesBtn.onclick = goToNoPage;
       }
-      
     }
-    let stepIndex = 1;
-    function nextStep() {
-      document.querySelector('.step.active').classList.remove('active');
-      stepIndex++;
 
+    function nextStep() {
+      // Deactivate current step
+      const currentStep = document.querySelector('.step.active');
+      if (currentStep) {
+        currentStep.classList.remove('active');
+      }
+
+      // Handle edge case for 'noPage' -> step 2 transition
+      if (currentStep && currentStep.id === 'noPage') {
+          stepIndex = 2; // Force stepIndex to 2 after the 'noPage'
+      } else if (currentStep && currentStep.id !== 'noPage') {
+          stepIndex++; // Increment normally only if not coming from 'noPage'
+      } else if (!currentStep) {
+          // If no current step active somehow, maybe default to 1 or 2?
+          stepIndex = Math.max(stepIndex, 1); // Ensure stepIndex is at least 1
+          console.warn("No active step found, attempting to proceed.");
+      }
+
+
+      // If it's time for the summary step
       if (stepIndex === 9) {
         const summaryDiv = document.getElementById('summary');
         const pickupLine = document.getElementById('pickupLine');
 
-        const flowers = document.getElementById('flowers').value;
-        const otherFlowers = document.querySelector('#step2 input').value;
-        const food = document.getElementById('food').value;
-        const otherFood = document.querySelector('#step3 input').value;
-        const date = document.getElementById('date').value;
-        const otherDate = document.querySelector('#step4 input').value;
-        const time = document.getElementById('time').value;
-        const otherTime = document.querySelector('#step5 input').value;
-        const restrictions = document.querySelector('#step6 input').value;
-        const postal = document.getElementById('postal').value;
-        const notes = document.getElementById('notes').value;
+        // Check if elements exist before proceeding
+        if (!summaryDiv || !pickupLine) {
+          console.error("Summary elements not found!");
+          return; // Exit if essential elements are missing
+        }
 
+        // Get all the values safely
+        const flowersSelect = document.getElementById('flowers');
+        const otherFlowersInput = document.getElementById('other_flowers'); // Use ID added in HTML
+        const foodSelect = document.getElementById('food');
+        const otherFoodInput = document.getElementById('other_food'); // Use ID added in HTML
+        const dateSelect = document.getElementById('date');
+        const otherDateInput = document.getElementById('other_date'); // Use ID added in HTML
+        const timeSelect = document.getElementById('time');
+        const otherTimeInput = document.getElementById('other_time'); // Use ID added in HTML
+        const restrictionsInput = document.getElementById('dietary_restrictions'); // Use ID added in HTML
+        const postalInput = document.getElementById('postal');
+        const notesInput = document.getElementById('notes');
+
+        // Use values only if elements exist
+        const flowers = flowersSelect ? flowersSelect.value : 'N/A';
+        const otherFlowers = otherFlowersInput ? otherFlowersInput.value : '';
+        const food = foodSelect ? foodSelect.value : 'N/A';
+        const otherFood = otherFoodInput ? otherFoodInput.value : '';
+        const date = dateSelect ? dateSelect.value : 'N/A';
+        const otherDate = otherDateInput ? otherDateInput.value : '';
+        const time = timeSelect ? timeSelect.value : 'N/A';
+        const otherTime = otherTimeInput ? otherTimeInput.value : '';
+        const restrictions = restrictionsInput ? restrictionsInput.value : '';
+        const postal = postalInput ? postalInput.value : '';
+        const notes = notesInput ? notesInput.value : '';
+
+        // Build the summary HTML
         summaryDiv.innerHTML = `
           <ul style="text-align:left">
             <li><strong>Flowers:</strong> ${flowers}${otherFlowers ? ' (' + otherFlowers + ')' : ''}</li>
@@ -203,48 +255,120 @@
             <li><strong>Date:</strong> ${date}${otherDate ? ' (' + otherDate + ')' : ''}</li>
             <li><strong>Time:</strong> ${time}${otherTime ? ' (' + otherTime + ')' : ''}</li>
             <li><strong>Dietary Restrictions:</strong> ${restrictions || 'None'}</li>
-            <li><strong>Postal Code:</strong> ${postal}</li>
+            <li><strong>Postal Code:</strong> ${postal || 'Not provided'}</li>
             <li><strong>Other notes:</strong> ${notes || 'None'}</li>
           </ul>`;
 
+        // Set the pickup line text
         pickupLine.innerText = `I will pick you up at ${otherTime || time}.`;
       }
-  }
-      document.getElementById(`step${stepIndex}`).classList.add('active');
-    }
+
+      // Activate the next step - **MOVED HERE**
+      const nextStepElement = document.getElementById(`step${stepIndex}`);
+      if (nextStepElement) {
+        nextStepElement.classList.add('active');
+      } else {
+         // If we try to go past step 9, it means we should be at the end or there's an error
+         if (stepIndex > 9 && !document.getElementById('done').classList.contains('active')) {
+            console.log("Attempting to navigate past the summary step. Ensure 'Confirm & Submit' was clicked.");
+             // Optionally force display 'done' page or handle error
+            // const doneElement = document.getElementById('done');
+            // if (doneElement) doneElement.classList.add('active');
+         } else if (stepIndex <= 9) {
+             console.error(`Step element with ID 'step${stepIndex}' not found!`);
+         }
+      }
+    } // <-- Correct end of nextStep function
+
     function goToNoPage() {
-      document.querySelector('.step.active').classList.remove('active');
-      document.getElementById('noPage').classList.add('active');
+      const currentStep = document.querySelector('.step.active');
+      if (currentStep) {
+        currentStep.classList.remove('active');
+      }
+      const noPageElement = document.getElementById('noPage');
+      if (noPageElement) {
+        noPageElement.classList.add('active');
+        // Crucially, we don't increment stepIndex here,
+        // the 'nextStep' function will handle setting it to 2
+        // when the button on 'noPage' is clicked.
+      } else {
+         console.error("Element with ID 'noPage' not found!");
+      }
     }
+
     function finishForm() {
-  const data = {
-    flowers: document.getElementById('flowers').value,
-    other_flowers: document.querySelector('#step2 input').value,
-    food: document.getElementById('food').value,
-    other_food: document.querySelector('#step3 input').value,
-    date: document.getElementById('date').value,
-    other_date: document.querySelector('#step4 input').value,
-    time: document.getElementById('time').value,
-    other_time: document.querySelector('#step5 input').value,
-    dietary_restrictions: document.querySelector('#step6 input').value,
-    postal_code: document.getElementById('postal').value,
-    extra_notes: document.getElementById('notes').value
-  };
+      // Safely get element values
+      const flowersSelect = document.getElementById('flowers');
+      const otherFlowersInput = document.getElementById('other_flowers');
+      const foodSelect = document.getElementById('food');
+      const otherFoodInput = document.getElementById('other_food');
+      const dateSelect = document.getElementById('date');
+      const otherDateInput = document.getElementById('other_date');
+      const timeSelect = document.getElementById('time');
+      const otherTimeInput = document.getElementById('other_time');
+      const restrictionsInput = document.getElementById('dietary_restrictions');
+      const postalInput = document.getElementById('postal');
+      const notesInput = document.getElementById('notes');
 
-  fetch('https://sheetdb.io/api/v1/s3n9wpw5o7lff', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ data: data })
-  })
-  .then(response => response.json())
-  .then(json => console.log(json))
-  .catch(err => console.error('Error:', err));
+      const data = {
+        flowers: flowersSelect ? flowersSelect.value : '',
+        other_flowers: otherFlowersInput ? otherFlowersInput.value : '',
+        food: foodSelect ? foodSelect.value : '',
+        other_food: otherFoodInput ? otherFoodInput.value : '',
+        date: dateSelect ? dateSelect.value : '',
+        other_date: otherDateInput ? otherDateInput.value : '',
+        time: timeSelect ? timeSelect.value : '',
+        other_time: otherTimeInput ? otherTimeInput.value : '',
+        dietary_restrictions: restrictionsInput ? restrictionsInput.value : '',
+        postal_code: postalInput ? postalInput.value : '',
+        extra_notes: notesInput ? notesInput.value : ''
+      };
 
-  document.querySelector('.step.active').classList.remove('active');
-  document.getElementById('done').classList.add('active');
-}
+      // Log data to console for debugging before sending
+      console.log("Submitting data:", data);
+
+      // Send data to SheetDB
+      fetch('https://sheetdb.io/api/v1/s3n9wpw5o7lff', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        // SheetDB expects data directly or within a 'data' object
+        // Let's try sending the object directly as 'data' seems to be a common structure for their examples
+         body: JSON.stringify({ data: [data] }) // Often needs to be an array of objects
+        // If the above gives issues, try: body: JSON.stringify(data)
+      })
+      .then(response => {
+          console.log("Fetch response status:", response.status);
+          if (!response.ok) {
+              // If response is not ok, log the response body for more details
+              return response.text().then(text => {
+                  throw new Error(`Network response was not ok: ${response.status} ${response.statusText}. Body: ${text}`);
+              });
+          }
+          return response.json(); // Parse JSON only if response is ok
+      })
+      .then(json => {
+          console.log("SheetDB Success:", json);
+          // Deactivate current step (summary)
+          const currentStep = document.querySelector('.step.active');
+          if (currentStep) {
+            currentStep.classList.remove('active');
+          }
+          // Activate the final 'done' step
+          const doneElement = document.getElementById('done');
+          if (doneElement) {
+            doneElement.classList.add('active');
+          } else {
+            console.error("Element with ID 'done' not found!");
+          }
+      })
+      .catch(err => {
+          console.error('Error submitting form:', err);
+          // Optionally, display an error message to the user here
+          alert("There was an error submitting your preferences. Please try again.");
+      });
+    }
   </script>
 </body>
 </html>
