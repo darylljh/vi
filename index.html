@@ -64,6 +64,7 @@
     <div class="step" id="noPage">
       <h2>Too bad, you already said yes 😌</h2>
       <p>Now let's continue planning something lovely...</p>
+      <img src="chatscreenshot.png" alt="Chat Screenshot" />
       <button onclick="nextStep()">Fine, continue 🙄</button>
     </div>
 
@@ -85,8 +86,8 @@
       <h2>What food are you craving?</h2>
       <img src="catwithfood.gif" alt="Cat eating food" />
       <select id="food">
-
         <option>Japanese 🍣</option>
+        <option>Western 🍔</option>
         <option>Korean 🍜</option>
         <option>Italian 🍝</option>
         <option>Thai 🥘</option>
@@ -99,8 +100,10 @@
 
     <div class="step" id="step4">
       <h2>Which date works best?</h2>
+      <img src="calendar.png" alt="Are you free?" />
       <select id="date">
         <option>May 12</option>
+        <option>May 13 (we have HASS enrolment)</option>
         <option>May 14</option>
         <option>May 15</option>
         <option>May 16</option>
@@ -112,6 +115,7 @@
 
     <div class="step" id="step5">
       <h2>What time do you prefer?</h2>
+      <img src="comic-sans-what-time.gif" alt="What time?" />
       <select id="time">
         <option>11:00 AM</option>
         <option>12:00 PM</option>
@@ -124,15 +128,24 @@
       <button onclick="nextStep()">Next</button>
     </div>
 
+    
+
     <div class="step" id="step6">
       <h2>Do you have any allergies I should know about?</h2>
       <input type="text" placeholder="E.g. nuts, seafood, pollen..." />
+      <button onclick="nextStep()">Next</button>
+    </div>
+
+    <div class="step" id="step7">
+      <h2>Anything else I should take note of?</h2>
+      <input type="text" placeholder="Let me know!" />
       <button onclick="finishForm()">Done</button>
     </div>
 
     <div class="step" id="done">
       <h2>Thank you 💕</h2>
-      <p>Can’t wait for our date! 😌</p>
+      <img src="its-a-date.gif" alt="It's a date!" style="width: 100%; max-width: 500px; height: auto;" />
+      <p>Can’t wait to see you! 😌</p>
     </div>
   </div>
 
@@ -148,9 +161,33 @@
       document.getElementById('noPage').classList.add('active');
     }
     function finishForm() {
-      document.querySelector('.step.active').classList.remove('active');
-      document.getElementById('done').classList.add('active');
-    }
+  const data = {
+    flowers: document.getElementById('flowers').value,
+    other_flowers: document.querySelector('#step2 input').value,
+    food: document.getElementById('food').value,
+    other_food: document.querySelector('#step3 input').value,
+    date: document.getElementById('date').value,
+    other_date: document.querySelector('#step4 input').value,
+    time: document.getElementById('time').value,
+    other_time: document.querySelector('#step5 input').value,
+    allergies: document.querySelector('#step6 input').value,
+    extra_notes: document.querySelector('#step7 input').value
+  };
+
+  fetch('https://sheetdb.io/api/v1/s3n9wpw5o7lff', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ data: data })
+  })
+  .then(response => response.json())
+  .then(json => console.log(json))
+  .catch(err => console.error('Error:', err));
+
+  document.querySelector('.step.active').classList.remove('active');
+  document.getElementById('done').classList.add('active');
+}
   </script>
 </body>
 </html>
