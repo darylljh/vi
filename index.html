@@ -132,14 +132,14 @@
     
 
     <div class="step" id="step6">
-      <h2>Do you have any allergies I should know about?</h2>
-      <input type="text" placeholder="E.g. nuts, seafood, pollen..." />
+      <h2>Do you have any dietary restrictions I should know about?</h2>
+      <input type="text" placeholder="E.g. no dairy products, vegetarian, no seafood..." />
       <button onclick="nextStep()">Next</button>
     </div>
 
     <div class="step" id="step7">
       <h2>Anything else I should take note of?</h2>
-      <input type="text" placeholder="Let me know!" />
+      <input type="text" placeholder="Let me know! (eg. daryl is damn cool for doing this early in the morning)" />
       <button onclick="finishForm()">Done</button>
     </div>
 
@@ -188,7 +188,7 @@
     other_date: document.querySelector('#step4 input').value,
     time: document.getElementById('time').value,
     other_time: document.querySelector('#step5 input').value,
-    allergies: document.querySelector('#step6 input').value,
+    dietary_restrictions: document.querySelector('#step6 input').value,
     extra_notes: document.querySelector('#step7 input').value
   };
 
