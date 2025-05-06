@@ -13,36 +13,19 @@
       padding: 0;
       text-align: center;
     }
-    header {
-      background-color: #ffdee9;
-      padding: 3em 1em 2em;
-    }
-    header h1 {
-      font-size: 2.5em;
-      margin: 0 0 0.5em;
-    }
-    header p {
-      font-size: 1.2em;
-    }
-    form {
-      max-width: 500px;
-      margin: 2em auto;
+    .container {
+      max-width: 600px;
+      margin: 3em auto;
       background: #ffffff;
       padding: 2em;
       border-radius: 1em;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
-    label {
-      display: block;
-      margin-top: 1.5em;
-      text-align: left;
+    .step {
+      display: none;
     }
-    input[type="text"], select {
-      width: 100%;
-      padding: 0.7em;
-      margin-top: 0.5em;
-      border: 1px solid #ccc;
-      border-radius: 0.5em;
+    .step.active {
+      display: block;
     }
     button {
       margin-top: 2em;
@@ -56,67 +39,97 @@
     button:hover {
       background-color: #ff99ac;
     }
-    footer {
-      margin: 3em 0;
-      font-style: italic;
-      color: #888;
+    select, input[type="text"] {
+      width: 100%;
+      padding: 0.7em;
+      margin-top: 1em;
+      border: 1px solid #ccc;
+      border-radius: 0.5em;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Vivian, I Have a Question 💐</h1>
-    <p>But first, help me plan the perfect date.</p>
-  </header>
+  <div class="container">
+    <div class="step active" id="step1">
+      <h1>Will you go out with me? 💐</h1>
+      <button onclick="nextStep('yes')">Yes</button>
+      <button onclick="tooBad()">No</button>
+    </div>
 
-  <form>
-    <label for="flowers">What flowers make you smile the most?</label>
-    <select id="flowers" name="flowers">
-      <option>Roses 🌹</option>
-      <option>Tulips 🌷</option>
-      <option>Sunflowers 🌻</option>
-      <option>Lilies 🤍</option>
-      <option>Others (type below)</option>
-    </select>
-    <input type="text" name="other_flowers" placeholder="Other flowers (optional)" />
+    <div class="step" id="step2">
+      <h2>What flowers make you smile the most?</h2>
+      <select id="flowers">
+        <option>Roses 🌹</option>
+        <option>Tulips 🌷</option>
+        <option>Sunflowers 🌻</option>
+        <option>Lilies 🤍</option>
+        <option>Others (type below)</option>
+      </select>
+      <input type="text" placeholder="Other flowers (optional)" />
+      <button onclick="nextStep()">Next</button>
+    </div>
 
-    <label for="food">What food are you craving?</label>
-    <select id="food" name="food">
-      <option>Japanese 🍣</option>
-      <option>Korean 🍜</option>
-      <option>Italian 🍝</option>
-      <option>Thai 🥘</option>
-      <option>Café food 🧁</option>
-      <option>Others (type below)</option>
-    </select>
-    <input type="text" name="other_food" placeholder="Other cuisine (optional)" />
+    <div class="step" id="step3">
+      <h2>What food are you craving?</h2>
+      <select id="food">
+        <option>Japanese 🍣</option>
+        <option>Korean 🍜</option>
+        <option>Italian 🍝</option>
+        <option>Thai 🥘</option>
+        <option>Café food 🧁</option>
+        <option>Others (type below)</option>
+      </select>
+      <input type="text" placeholder="Other cuisine (optional)" />
+      <button onclick="nextStep()">Next</button>
+    </div>
 
-    <label for="date">Which date works best?</label>
-    <select id="date" name="date">
-      <option>May 12</option>
-      <option>May 14</option>
-      <option>May 15</option>
-      <option>May 16</option>
-      <option>Other (type below)</option>
-    </select>
-    <input type="text" name="other_date" placeholder="Other date (optional)" />
+    <div class="step" id="step4">
+      <h2>Which date works best?</h2>
+      <select id="date">
+        <option>May 12</option>
+        <option>May 14</option>
+        <option>May 15</option>
+        <option>May 16</option>
+        <option>Other (type below)</option>
+      </select>
+      <input type="text" placeholder="Other date (optional)" />
+      <button onclick="nextStep()">Next</button>
+    </div>
 
-    <label for="time">What time do you prefer?</label>
-    <select id="time" name="time">
-      <option>11:00 AM</option>
-      <option>12:00 PM</option>
-      <option>1:00 PM</option>
-      <option>6:00 PM</option>
-      <option>7:00 PM</option>
-      <option>Other (type below)</option>
-    </select>
-    <input type="text" name="other_time" placeholder="Other time (optional)" />
+    <div class="step" id="step5">
+      <h2>What time do you prefer?</h2>
+      <select id="time">
+        <option>11:00 AM</option>
+        <option>12:00 PM</option>
+        <option>1:00 PM</option>
+        <option>6:00 PM</option>
+        <option>7:00 PM</option>
+        <option>Other (type below)</option>
+      </select>
+      <input type="text" placeholder="Other time (optional)" />
+      <button onclick="finishForm()">Done</button>
+    </div>
 
-    <button type="submit">Send</button>
-  </form>
+    <div class="step" id="done">
+      <h2>Thank you 💕</h2>
+      <p>Can’t wait for our date! 😌</p>
+    </div>
+  </div>
 
-  <footer>
-    I promise the food will be good 😌
-  </footer>
+  <script>
+    let stepIndex = 1;
+    function nextStep() {
+      document.getElementById(`step${stepIndex}`).classList.remove('active');
+      stepIndex++;
+      document.getElementById(`step${stepIndex}`).classList.add('active');
+    }
+    function finishForm() {
+      document.getElementById(`step${stepIndex}`).classList.remove('active');
+      document.getElementById('done').classList.add('active');
+    }
+    function tooBad() {
+      alert("Too bad, you already said yes 😌");
+    }
+  </script>
 </body>
 </html>
