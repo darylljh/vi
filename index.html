@@ -138,9 +138,23 @@
     </div>
 
     <div class="step" id="step7">
+      <h2>What’s your postal code?</h2>
+      <input type="text" id="postal" placeholder="e.g. 123456" />
+      <button onclick="nextStep()">Next</button>
+    </div>
+
+    <div class="step" id="step8">
       <h2>Anything else I should take note of?</h2>
-      <input type="text" placeholder="Let me know! (eg. daryl is damn cool for doing this early in the morning)" />
-      <button onclick="finishForm()">Done</button>
+      <input type="text" id="notes" placeholder="Let me know! (eg. daryl is damn cool for doing this early in the morning)" />
+      <button onclick="nextStep()">Next</button>
+    </div>
+    </div>
+
+    <div class="step" id="step9">
+      <h2>Here’s what you picked! 📝</h2>
+      <div id="summary"></div>
+      <p id="pickupLine"></p>
+      <button onclick="finishForm()">Confirm & Submit</button>
     </div>
 
     <div class="step" id="done">
@@ -172,6 +186,39 @@
     function nextStep() {
       document.querySelector('.step.active').classList.remove('active');
       stepIndex++;
+
+      if (stepIndex === 9) {
+        const summaryDiv = document.getElementById('summary');
+        const pickupLine = document.getElementById('pickupLine');
+
+        const flowers = document.getElementById('flowers').value;
+        const otherFlowers = document.querySelector('#step2 input').value;
+        const food = document.getElementById('food').value;
+        const otherFood = document.querySelector('#step3 input').value;
+        const date = document.getElementById('date').value;
+        const otherDate = document.querySelector('#step4 input').value;
+        const time = document.getElementById('time').value;
+        const otherTime = document.querySelector('#step5 input').value;
+        const restrictions = document.querySelector('#step6 input').value;
+        const postal = document.getElementById('postal').value;
+        const notes = document.getElementById('notes').value;
+
+        summaryDiv.innerHTML = `
+          <ul style="text-align:left">
+            <li><strong>Flowers:</strong> ${flowers}${otherFlowers ? ' (' + otherFlowers + ')' : ''}</li>
+            <li><strong>Food:</strong> ${food}${otherFood ? ' (' + otherFood + ')' : ''}</li>
+            <li><strong>Date:</strong> ${date}${otherDate ? ' (' + otherDate + ')' : ''}</li>
+            <li><strong>Time:</strong> ${time}${otherTime ? ' (' + otherTime + ')' : ''}</li>
+            <li><strong>Dietary Restrictions:</strong> ${restrictions || 'None'}</li>
+            <li><strong>Postal Code:</strong> ${postal}</li>
+            <li><strong>Other notes:</strong> ${notes || 'None'}</li>
+          </ul>`;
+
+        pickupLine.innerText = `I will pick you up at ${otherTime || time}.`;
+      }
+
+      document.getElementById(`step${stepIndex}`).classList.add('active');
+    }
       document.getElementById(`step${stepIndex}`).classList.add('active');
     }
     function goToNoPage() {
@@ -189,7 +236,8 @@
     time: document.getElementById('time').value,
     other_time: document.querySelector('#step5 input').value,
     dietary_restrictions: document.querySelector('#step6 input').value,
-    extra_notes: document.querySelector('#step7 input').value
+    postal_code: document.getElementById('postal').value,
+    extra_notes: document.getElementById('notes').value
   };
 
   fetch('https://sheetdb.io/api/v1/s3n9wpw5o7lff', {
