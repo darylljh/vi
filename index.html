@@ -46,6 +46,11 @@
       border: 1px solid #ccc;
       border-radius: 0.5em;
     }
+    img {
+      max-width: 100%;
+      margin: 1em 0;
+      border-radius: 0.5em;
+    }
   </style>
 </head>
 <body>
@@ -53,11 +58,18 @@
     <div class="step active" id="step1">
       <h1>Will you go out with me? 💐</h1>
       <button onclick="nextStep('yes')">Yes</button>
-      <button onclick="tooBad()">No</button>
+      <button onclick="goToNoPage()">No</button>
+    </div>
+
+    <div class="step" id="noPage">
+      <h2>Too bad, you already said yes 😌</h2>
+      <p>Now let's continue planning something lovely...</p>
+      <button onclick="nextStep()">Fine, continue 🙄</button>
     </div>
 
     <div class="step" id="step2">
       <h2>What flowers make you smile the most?</h2>
+      <img src="this-is-for-you-cat-flower.gif" alt="Cat with flowers" />
       <select id="flowers">
         <option>Roses 🌹</option>
         <option>Tulips 🌷</option>
@@ -107,6 +119,12 @@
         <option>Other (type below)</option>
       </select>
       <input type="text" placeholder="Other time (optional)" />
+      <button onclick="nextStep()">Next</button>
+    </div>
+
+    <div class="step" id="step6">
+      <h2>Do you have any allergies I should know about?</h2>
+      <input type="text" placeholder="E.g. nuts, seafood, pollen..." />
       <button onclick="finishForm()">Done</button>
     </div>
 
@@ -119,16 +137,17 @@
   <script>
     let stepIndex = 1;
     function nextStep() {
-      document.getElementById(`step${stepIndex}`).classList.remove('active');
+      document.querySelector('.step.active').classList.remove('active');
       stepIndex++;
       document.getElementById(`step${stepIndex}`).classList.add('active');
     }
-    function finishForm() {
-      document.getElementById(`step${stepIndex}`).classList.remove('active');
-      document.getElementById('done').classList.add('active');
+    function goToNoPage() {
+      document.querySelector('.step.active').classList.remove('active');
+      document.getElementById('noPage').classList.add('active');
     }
-    function tooBad() {
-      alert("Too bad, you already said yes 😌");
+    function finishForm() {
+      document.querySelector('.step.active').classList.remove('active');
+      document.getElementById('done').classList.add('active');
     }
   </script>
 </body>
