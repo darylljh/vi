@@ -57,7 +57,7 @@
   <div class="container">
     <div class="step active" id="step1">
       <h1>Will you go out with me? 💐</h1>
-      <button id="yesBtn" style="transition: all 0.3s;" onclick="nextStep('yes')">Yes</button>
+      <button id="yesBtn" style="transition: all 0.3s;" onclick="nextStep()">Yes</button>
       <button id="noBtn" onclick="handleNoClick()">No</button>
     </div>
 
@@ -216,9 +216,7 @@
 
         pickupLine.innerText = `I will pick you up at ${otherTime || time}.`;
       }
-
-      document.getElementById(`step${stepIndex}`).classList.add('active');
-    }
+  }
       document.getElementById(`step${stepIndex}`).classList.add('active');
     }
     function goToNoPage() {
