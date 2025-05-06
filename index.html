@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vivian, I Have a Question 💐</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fff9f0;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    header {
+      background-color: #ffdee9;
+      padding: 3em 1em 2em;
+    }
+    header h1 {
+      font-size: 2.5em;
+      margin: 0 0 0.5em;
+    }
+    header p {
+      font-size: 1.2em;
+    }
+    form {
+      max-width: 500px;
+      margin: 2em auto;
+      background: #ffffff;
+      padding: 2em;
+      border-radius: 1em;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    label {
+      display: block;
+      margin-top: 1.5em;
+      text-align: left;
+    }
+    input[type="text"], select {
+      width: 100%;
+      padding: 0.7em;
+      margin-top: 0.5em;
+      border: 1px solid #ccc;
+      border-radius: 0.5em;
+    }
+    button {
+      margin-top: 2em;
+      background-color: #ffb3c6;
+      border: none;
+      padding: 1em 2em;
+      font-size: 1em;
+      border-radius: 1em;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #ff99ac;
+    }
+    footer {
+      margin: 3em 0;
+      font-style: italic;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Vivian, I Have a Question 💐</h1>
+    <p>But first, help me plan the perfect date.</p>
+  </header>
+
+  <form>
+    <label for="flowers">What flowers make you smile the most?</label>
+    <select id="flowers" name="flowers">
+      <option>Roses 🌹</option>
+      <option>Tulips 🌷</option>
+      <option>Sunflowers 🌻</option>
+      <option>Lilies 🤍</option>
+      <option>Others (type below)</option>
+    </select>
+    <input type="text" name="other_flowers" placeholder="Other flowers (optional)" />
+
+    <label for="food">What food are you craving?</label>
+    <select id="food" name="food">
+      <option>Japanese 🍣</option>
+      <option>Korean 🍜</option>
+      <option>Italian 🍝</option>
+      <option>Thai 🥘</option>
+      <option>Café food 🧁</option>
+      <option>Others (type below)</option>
+    </select>
+    <input type="text" name="other_food" placeholder="Other cuisine (optional)" />
+
+    <label for="date">Which date works best?</label>
+    <select id="date" name="date">
+      <option>May 12</option>
+      <option>May 14</option>
+      <option>May 15</option>
+      <option>May 16</option>
+      <option>Other (type below)</option>
+    </select>
+    <input type="text" name="other_date" placeholder="Other date (optional)" />
+
+    <label for="time">What time do you prefer?</label>
+    <select id="time" name="time">
+      <option>11:00 AM</option>
+      <option>12:00 PM</option>
+      <option>1:00 PM</option>
+      <option>6:00 PM</option>
+      <option>7:00 PM</option>
+      <option>Other (type below)</option>
+    </select>
+    <input type="text" name="other_time" placeholder="Other time (optional)" />
+
+    <button type="submit">Send</button>
+  </form>
+
+  <footer>
+    I promise the food will be good 😌
+  </footer>
+</body>
+</html>
