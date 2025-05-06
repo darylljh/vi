@@ -175,12 +175,9 @@
       if (growth >= 2.5) {
         noBtn.style.display = 'none';
         yesBtn.style.marginTop = '3em';
-        yesBtn.setAttribute('onclick', 'goToNoPage()');
+        yesBtn.onclick = goToNoPage;
       }
-      if (growth >= 2.5) {
-        noBtn.style.display = 'none';
-        yesBtn.style.marginTop = '3em';
-      }
+      
     }
     let stepIndex = 1;
     function nextStep() {
